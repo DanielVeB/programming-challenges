@@ -13,9 +13,15 @@ internal class _202HappyNumberKtTest {
             Stream.of(
                 Arguments.of(19, true),
                 Arguments.of(91, true),
+                Arguments.of(263, true),
+                Arguments.of(293, true),
+                Arguments.of(409, true),
+
 
                 Arguments.of(2, false),
                 Arguments.of(3, false),
+                Arguments.of(408, false),
+                Arguments.of(410, false),
 
                 )
     }
