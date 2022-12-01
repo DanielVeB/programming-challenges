@@ -1,63 +1,20 @@
 package leetcode.algorithms
 
 fun spiralOrder(matrix: Array<IntArray>): List<Int> {
+    return if (matrix.isEmpty()) {
+        listOf()
+    } else matrix[0].toList() + spiralOrder(matrix.copyOfRange(1, matrix.size).rotate())
+}
 
-    val result = mutableListOf<Int>()
-
-    var topBorder = 0
-    var bottomBorder = matrix.size - 1
-
-    var toBottom = false
-
-    var leftBorder = 0
-    var rightBorder = matrix[0].size - 1
-
-    while (topBorder <= bottomBorder){
-        if(leftBorder > rightBorder){
-            return result
+private fun Array<IntArray>.rotate(): Array<IntArray> {
+    if (this.isEmpty()) return arrayOf()
+    val l = mutableListOf<IntArray>()
+    for (i in this[0].size - 1 downTo 0) {
+        val row = mutableListOf<Int>()
+        for (j in 0 until this.size) {
+            row.add(this[j][i])
         }
-        for (i in topBorder .. bottomBorder) {
-            if (i == topBorder && !toBottom) {
-                result.addAll(matrix[i].copyOfRange(leftBorder, rightBorder + 1).toList())
-                topBorder++
-                toBottom = true
-            } else if (i == bottomBorder && toBottom) {
-                result.addAll(matrix[i].copyOfRange(leftBorder, rightBorder + 1).toList().reversed())
-                bottomBorder--
-                rightBorder--
-                toBottom = false
-            } else {
-                if (toBottom) {
-                    result.add(matrix[i][rightBorder])
-                } else {
-                    result.add(matrix[i][leftBorder])
-                }
-            }
-        }
-
-        if(leftBorder > rightBorder){
-            return result
-        }
-
-        for (i in bottomBorder downTo topBorder ) {
-            if (i == topBorder && !toBottom) {
-                result.addAll(matrix[i].copyOfRange(leftBorder, rightBorder + 1).toList())
-                topBorder++
-                toBottom = true
-            } else if (i == bottomBorder && toBottom) {
-                result.addAll(matrix[i].copyOfRange(leftBorder, rightBorder + 1).toList().reversed())
-                bottomBorder--
-                rightBorder--
-                toBottom = false
-            } else {
-                if (toBottom) {
-                    result.add(matrix[i][rightBorder])
-                } else {
-                    result.add(matrix[i][leftBorder])
-                }
-            }
-        }
-        leftBorder++
+        l.add(row.toIntArray())
     }
-    return result
+    return l.toTypedArray()
 }
